@@ -78,11 +78,6 @@ def print_solution(solution):
 
 
 def test_piece(piece, rotation, position, grid, ghost, ghost_grid, solution):
-    if grid == 65535 and ghost == ghost_grid:
-        print("\n")
-        print("Solution :")
-        print_solution(solution)
-        return
     rot = pieces[piece][rotation][0]
     pos = pieces[piece][rotation][1][position]
     gho = pieces[piece][rotation][2]
@@ -93,14 +88,29 @@ def test_piece(piece, rotation, position, grid, ghost, ghost_grid, solution):
     if not (grid & val_grid) and not ((ghost_grid ^ val_ghost) & val_grid):
         solution[piece][0] = rotation
         solution[piece][1] = val_torch
-        test_piece(
-            piece + 1, 0, 0, grid + val_grid, ghost + val_ghost, ghost_grid, solution
-        )
+        if piece + 1 < len(pieces):
+            test_piece(
+                piece + 1,
+                0,
+                0,
+                grid + val_grid,
+                ghost + val_ghost,
+                ghost_grid,
+                solution,
+            )
+        elif grid + val_grid == 65535 and ghost == ghost_grid:
+            global nb_solution
+            nb_solution += 1
+            print("\n")
+            print(f"Solution {nb_solution} :")
+            print_solution(solution)
+            return
+        else:
+            print("impossible")
     if position + 1 < len(pieces[piece][rotation][1]):
         test_piece(piece, rotation, position + 1, grid, ghost, ghost_grid, solution)
-    else:
-        if rotation + 1 < len(pieces[piece]):
-            test_piece(piece, rotation + 1, 0, grid, ghost, ghost_grid, solution)
+    elif rotation + 1 < len(pieces[piece]):
+        test_piece(piece, rotation + 1, 0, grid, ghost, ghost_grid, solution)
     return
 
 
@@ -117,5 +127,5 @@ while True:
             p += 1
     if p > 15:
         break
-
+nb_solution = 0
 test_piece(0, 0, 0, 0, 0, ghost_grid, solution)
