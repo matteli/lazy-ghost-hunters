@@ -142,18 +142,21 @@ def main(find, number):
                 break
         lgh = LGH(ghost_grid, find=False, number=number)
         lgh.test_piece(0, 0, 0, 0, 0)
+        if number:
+            print(dict_nb_solution)
     else:
         for ghost_grid in range(1, 65535):
             if bin(ghost_grid).count("1") == 6:
                 lgh = LGH(ghost_grid, find=True, number=number)
                 lgh.test_piece(0, 0, 0, 0, 0)
-        print(dict_nb_solution)
-        print(f"Number of possible cards : {len(dict_nb_solution)}")
-        print(f"Number of max solutions : {max(dict_nb_solution.values())}")
-        for i in range(1, max(dict_nb_solution.values()) + 1):
-            print(
-                f"{i} solution{'s' if i>1 else ''} : {list(dict_nb_solution.values()).count(i)}"
-            )
+        if number:
+            print(dict_nb_solution)
+            print(f"Number of possible cards : {len(dict_nb_solution)}")
+            print(f"Number of max solutions : {max(dict_nb_solution.values())}")
+            for i in range(1, max(dict_nb_solution.values()) + 1):
+                print(
+                    f"{i} solution{'s' if i>1 else ''} : {list(dict_nb_solution.values()).count(i)}"
+                )
 
 
 if __name__ == "__main__":
