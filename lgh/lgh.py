@@ -2,8 +2,9 @@
 
 import re
 import argparse
+import sys
 
-__version__ = "2.0.3"
+__version__ = "2.1.1"
 
 dict_nb_solution = dict()
 
@@ -64,6 +65,9 @@ class LGH:
         return ""
 
     def print_solution(self, solution, ghost_grid):
+        if self.nb_solution == 1:
+            print("\n")
+            print(f"Grille {ghost_grid}")
         print("\n")
         print(f"Solution {self.nb_solution} :")
         for row in range(0, 4):
@@ -126,21 +130,24 @@ class LGH:
         return
 
 
-def main(find=False, number=False):
+def main(find=False, number=False, grid_value=0):
     if not find:
-        ghost_grid = 0
-        p = 0
-        print("Indicate with 0 for no ghost and 1 for ghost:")
-        while True:
-            line = input()
-            if not re.match(r"[0-1]{4}$", line):
-                print("Put only 4 digits of 0 or 1")
-            else:
-                for l in line:
-                    ghost_grid += int(l) * 2**p
-                    p += 1
-            if p > 15:
-                break
+        if not grid_value:
+            ghost_grid = 0
+            p = 0
+            print("Indicate with 0 for no ghost and 1 for ghost:")
+            while True:
+                line = input()
+                if not re.match(r"[0-1]{4}$", line):
+                    print("Put only 4 digits of 0 or 1")
+                else:
+                    for l in line:
+                        ghost_grid += int(l) * 2**p
+                        p += 1
+                if p > 15:
+                    break
+        else:
+            ghost_grid = grid_value
         lgh = LGH(ghost_grid, find=False, number=number)
         lgh.test_piece(0, 0, 0, 0, 0)
         if number:
@@ -160,23 +167,35 @@ def main(find=False, number=False):
                 )
 
 
-if __name__ == "__main__":
+def run():
     parser = argparse.ArgumentParser(
-        prog="Lazy Ghost Hunters",
-        description="Find solutions for the game Ghost Hunters.",
+        prog="lgh",
+        description="Lazy Ghost Hunters : Find the solutions for the game Ghost Hunters.",
     )
+
+    parser.add_argument(
+        "-g",
+        "--grid",
+        type=int,
+        help="find the solutions for the value of the ghosts's grid",
+    )
+
     parser.add_argument(
         "-f",
         "--find",
-        help="Find solutions for every combination of ghosts",
+        help="find the solutions for each combination of ghosts",
         action="store_true",
     )
     parser.add_argument(
         "-n",
         "--number",
-        help="Give only the number of solutions",
+        help="give only the number of solutions",
         action="store_true",
     )
     parser.add_argument("-v", "--version", action="version", version=__version__)
-    args = parser.parse_args()
-    main(find=args.find, number=args.number)
+    args = parser.parse_args(sys.argv[1:])
+    main(find=args.find, number=args.number, grid_value=args.grid)
+
+
+if __name__ == "__main__":
+    run()
