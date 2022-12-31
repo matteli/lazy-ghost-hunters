@@ -1,14 +1,21 @@
 [tool.poetry]
 name = "lazy-ghost-hunters"
-version = "2.0.1"
+version = "2.0.3"
 description = "Lazy Ghost Hunters is a solver for the game Ghost Hunters from Smart Games"
 authors = ["matteli <matthieu.nue@gmail.com>"]
 license = "MIT"
+readme = "README.rst"
+packages = [{include = "lgh"}]
+repository = "https://github.com/matteli/lazy-ghost-hunters"
+
 
 [tool.poetry.dependencies]
 python = "^3.6"
 
 [tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+lgh="lgh.lgh:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

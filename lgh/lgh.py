@@ -2,7 +2,8 @@
 
 import re
 import argparse
-from __init__ import __version__
+
+__version__ = "2.0.3"
 
 dict_nb_solution = dict()
 
@@ -125,7 +126,7 @@ class LGH:
         return
 
 
-def main(find, number):
+def main(find=False, number=False):
     if not find:
         ghost_grid = 0
         p = 0
