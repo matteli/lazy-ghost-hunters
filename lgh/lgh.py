@@ -4,7 +4,7 @@ import re
 import argparse
 import sys
 
-__version__ = "2.1.1"
+__version__ = "2.1.2"
 
 dict_nb_solution = dict()
 
@@ -67,7 +67,7 @@ class LGH:
     def print_solution(self, solution, ghost_grid):
         if self.nb_solution == 1:
             print("\n")
-            print(f"Grille {ghost_grid}")
+            print(f"Grid {ghost_grid}")
         print("\n")
         print(f"Solution {self.nb_solution} :")
         for row in range(0, 4):

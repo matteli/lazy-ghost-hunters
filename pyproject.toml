@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lazy-ghost-hunters"
-version = "2.1.1"
+version = "2.1.2"
 description = "Lazy Ghost Hunters is a solver for the game Ghost Hunters from Smart Games"
 authors = ["matteli <matthieu.nue@gmail.com>"]
 license = "MIT"
